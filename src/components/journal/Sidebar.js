@@ -1,0 +1,37 @@
+import React from 'react'
+import { JournalEntries } from './JournalEntries'
+import { useDispatch, useSelector } from 'react-redux'
+import { Startlogout } from '../../actions/auth';
+import {  startNotes } from '../../actions/notes';
+export const Sidebar = () => {
+    const dispatch = useDispatch();
+    const hanldeLogout=()=>{
+        // console.log('paso por aqui')
+        dispatch( Startlogout() );
+    }
+    const { name } = useSelector( state=> state.auth );
+    // console.log(v);
+    const handleAddNew =()=>{
+        dispatch(startNotes());
+    }
+    return (
+        <aside className="journal__sidebar">
+            <div className="journal__sidebar-navbar">
+                <h3 className="mt-5">
+                    <i className="far fa-moon"></i>
+                    <span> { name } </span>
+                </h3>
+                <button className="btn" onClick= { hanldeLogout }>Lougout</button>
+            </div>
+
+            <div 
+                className="journal__new-entry "
+                onClick = { handleAddNew }    
+            >
+                <i className=" far fa-calendar-plus fa-5x"></i>
+                <p className="mt-5">New Entry</p>
+            </div>
+            <JournalEntries/>
+        </aside>
+    )
+}
